@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
-//@EqualsAndHashCode
 public class AllTasks {
 
     @Id

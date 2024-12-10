@@ -1,6 +1,5 @@
 package com.doganmehmet.app.taskmanagementsystem.controller;
 
-import com.doganmehmet.app.taskmanagementsystem.entity.Users;
 import com.doganmehmet.app.taskmanagementsystem.service.ServiceHelper;
 import com.doganmehmet.app.taskmanagementsystem.service.find.dto.AllTasksDTO;
 import com.doganmehmet.app.taskmanagementsystem.service.find.dto.ProjectsDTO;

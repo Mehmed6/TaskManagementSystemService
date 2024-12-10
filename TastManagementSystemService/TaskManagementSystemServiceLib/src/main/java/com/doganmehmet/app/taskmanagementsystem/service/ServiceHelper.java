@@ -26,6 +26,24 @@ public class ServiceHelper {
     private final ISaveMapper m_saveMapper;
     private final IFindMapper m_findMapper;
 
+    private UpdateUsersDTO updateUser(String username, SaveUsersDTO usersDTO)
+    {
+        var user = m_entityHelper.findUserByUserName(username);
+
+        if (user.isEmpty())
+            throw new RuntimeException("User not found");
+
+        var newUser = user.get();
+
+        newUser.userName = usersDTO.userName;
+        newUser.email = usersDTO.email;
+        newUser.password = usersDTO.password;
+        newUser.role = usersDTO.role;
+
+        m_entityHelper.saveUsers(newUser);
+
+        return m_saveMapper.toUpdateUsersDTO(newUser);
+    }
     public ServiceHelper(EntityHelper entityHelper, ISaveMapper saveMapper, IFindMapper findMapper)
     {
         m_entityHelper = entityHelper;
@@ -47,8 +65,6 @@ public class ServiceHelper {
         if (user.isEmpty())
             throw new RuntimeException("User not found");
 
-        //projectsDTO.userDTO = m_userMapper.toUsersDTO(user.get());
-
         var project = m_saveMapper.toProjects(saveProjectsDTO);
         project.user = user.get();
 
@@ -67,7 +83,6 @@ public class ServiceHelper {
         var allTasks = m_saveMapper.toAllTasks(saveAllTasksDTO);
 
         allTasks.project = optProject.get();
-
         allTasks.user = optProject.get().user;
 
         return m_saveMapper.toSaveAllTasksDTO(m_entityHelper.saveTasks(allTasks));
@@ -79,7 +94,6 @@ public class ServiceHelper {
         return StreamSupport.stream(m_entityHelper.findProjectsByUsername(username).spliterator(), false)
                 .map(m_findMapper::toProjectsDTO)
                 .toList();
-        //return m_findMapper.toProjectsDTOs(m_entityHelper.findProjectsByUsername(username));
     }
 
     public Iterable<ProjectsDTO> findAllProjects()
@@ -87,7 +101,6 @@ public class ServiceHelper {
         return StreamSupport.stream(m_entityHelper.findAllProjects().spliterator(), false)
                 .map(m_findMapper::toProjectsDTO)
                 .toList();
-        //return m_findMapper.toProjectsDTOs(m_entityHelper.findAllProjects());
     }
 
     public Iterable<UsersDTO> findAllUsers()
@@ -100,7 +113,6 @@ public class ServiceHelper {
         return StreamSupport.stream(m_entityHelper.findAllTasks().spliterator(), false)
                 .map(m_findMapper::toAllTasksDTO)
                 .toList();
-        //return m_findMapper.toAllTasksDTOs(m_entityHelper.findAllTasks());
     }
 
     public UsersDTO findUserById(long id)
@@ -151,27 +163,9 @@ public class ServiceHelper {
         m_entityHelper.deleteAllTaskById(id);
     }
 
-    public UpdateUsersDTO        updateUserByUserName(String username, SaveUsersDTO usersDTO)
+    public UpdateUsersDTO updateUserByUserName(String username, SaveUsersDTO usersDTO)
     {
        return updateUser(username, usersDTO);
     }
 
-    private UpdateUsersDTO updateUser(String username, SaveUsersDTO usersDTO)
-    {
-        var user = m_entityHelper.findUserByUserName(username);
-
-        if (user.isEmpty())
-            throw new RuntimeException("User not found");
-
-        var newUser = user.get();
-
-        newUser.userName = usersDTO.userName;
-        newUser.email = usersDTO.email;
-        newUser.password = usersDTO.password;
-        newUser.role = usersDTO.role;
-
-        m_entityHelper.saveUsers(newUser);
-
-        return m_saveMapper.toUpdateUsersDTO(newUser);
-    }
 }

@@ -1,8 +1,6 @@
 package com.doganmehmet.app.taskmanagementsystem.repository;
 
-import com.doganmehmet.app.taskmanagementsystem.entity.Projects;
 import com.doganmehmet.app.taskmanagementsystem.entity.Users;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -14,13 +12,9 @@ import java.util.Optional;
 public interface IUserRepository extends CrudRepository<Users, Long> {
     boolean existsByUserName(String username);
 
-    //@Query("SELECT u FROM Users u JOIN FETCH u.projects WHERE u.userName = :username")
-    //Optional<Users> findByUserName(@Param("username") String username);
-
     @Query("select distinct u from Users u left join fetch u.projects where u.userName = :userName")
     Optional<Users> findByUserName(@Param("userName") String userName);
 
-    // Iterable<Projects> findProjectsByUserName(String username);
     @Query("select u from Users u left join fetch u.projects")
     Iterable<Users> findAllUsers();
 
@@ -29,7 +23,6 @@ public interface IUserRepository extends CrudRepository<Users, Long> {
 
     void deleteUsersByUserName(String userName);
 
-    //Users updateUsersByUserName(String userName, Users user);
 
 
 }

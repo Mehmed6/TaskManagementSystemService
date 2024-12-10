@@ -9,14 +9,10 @@ import java.time.LocalDateTime;
 public class AllTasksDTO {
 
     public String title;
-
     public String description;
-
     public Status status;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     public LocalDateTime deadline;
-
     public long projectId;
     public String userName;
 

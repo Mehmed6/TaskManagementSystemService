@@ -2,13 +2,11 @@ package com.doganmehmet.app.taskmanagementsystem.entity;
 
 import com.doganmehmet.app.taskmanagementsystem.enums.Role;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 
 import java.util.Set;
 
 @Entity
 @Table
-//@EqualsAndHashCode
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

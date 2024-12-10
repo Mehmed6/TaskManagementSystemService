@@ -15,9 +15,7 @@ import java.util.Set;
 @Mapper(implementationName = "FindMapperImpl", componentModel = "spring")
 public interface IFindMapper {
     Iterable<UsersDTO> toUsersDTOs(Iterable<Users> users);
-
     UsersDTO toUsersDTO(Users user);
-
     Users toUsers(UsersDTO usersDTO);
     Iterable<ProjectsDTO> toProjectsDTOs(Iterable<Projects> projects);
     Set<AllTasksDTO> toAllTasksDTOs(Iterable<AllTasks> allTasks);

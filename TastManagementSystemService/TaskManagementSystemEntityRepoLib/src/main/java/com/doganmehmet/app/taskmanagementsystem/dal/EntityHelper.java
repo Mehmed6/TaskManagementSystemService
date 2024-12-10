@@ -103,12 +103,4 @@ public class EntityHelper {
         m_taskRepository.deleteById(id);
     }
 
-    /*
-    public Users updateUserByUserName(String username, Users users)
-    {
-        return m_userRepository.updateUsersByUserName(username, users);
-    }
-
-     */
-
 }
